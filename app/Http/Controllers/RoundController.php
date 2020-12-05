@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Round;
+use App\Services\RoundService;
 use Illuminate\Http\Request;
 
 class RoundController extends Controller
 {
+    protected $service;
+
+    function __construct(RoundService $service)
+    {
+        $this->service = $service;
+        $this->middleware('auth', [
+            'except' => ['index', 'show']
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PrizeController;
+use App\Http\Controllers\RoundController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('wel');
-});
+})->name('hallo');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/prize', [App\Http\Controllers\PrizeController::class, 'index'])->name('prize');
+
+Route::apiResource('/prizes', PrizeController::class);
+Route::apiResource('/rounds', RoundController::class);

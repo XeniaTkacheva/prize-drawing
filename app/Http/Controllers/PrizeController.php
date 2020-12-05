@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Prize;
+use App\Services\PrizeService;
 use Illuminate\Http\Request;
 
 class PrizeController extends Controller
 {
     protected $service;
 
-    function __construct(PriseService $service)
+    function __construct(PrizeService $service)
     {
         $this->service = $service;
-        $this->middleware('auth', [
-            'except' => ['index', 'show']
-        ]);
+//        $this->middleware('auth', [
+//            'except' => ['index', 'show']
+//        ]);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,25 +25,25 @@ class PrizeController extends Controller
      */
     public function index()
     {
-        //
+        return response('Мы готовим призы!');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
 
-        return response(['message'=>'Prize created successfully'], 201);
+        return response(['message' => 'Prize created successfully'], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Prize  $prize
+     * @param \App\Models\Prize $prize
      * @return \Illuminate\Http\Response
      */
     public function show(Prize $prize)
@@ -52,8 +54,8 @@ class PrizeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Prize  $prize
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Prize $prize
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Prize $prize)
@@ -64,7 +66,7 @@ class PrizeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Prize  $prize
+     * @param \App\Models\Prize $prize
      * @return \Illuminate\Http\Response
      */
     public function destroy(Prize $prize)
