@@ -47,14 +47,20 @@ class RoundController extends Controller
     public function show()
     {
         $new_round = Round::all()->last();
+
         if (!empty($new_round)) {
             $prize = Prize::where('id', $new_round->prize_id)->first();
         } else {
             return response('Фокус не удался!');
         }
-        $rounds = Round::query()->where('user_id', Auth::user()->id)->with('prize')->orderBy('id', 'desc')->get();
 
-        return view('rounds.list', ['round' => $new_round, 'rounds' => $rounds, 'prize' => $prize]);
+        $rounds = Round::query()
+            ->where('user_id', Auth::user()->id)
+            ->with('prize')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('rounds.show', ['round' => $new_round, 'rounds' => $rounds, 'prize' => $prize]);
     }
 
     /**

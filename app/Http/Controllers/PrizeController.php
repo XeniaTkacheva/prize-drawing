@@ -13,19 +13,20 @@ class PrizeController extends Controller
     function __construct(PrizeService $service)
     {
         $this->service = $service;
-//        $this->middleware('auth', [
-//            'except' => ['index', 'show']
-//        ]);
+        $this->middleware('auth', [
+            'except' => ['index', 'show']
+        ]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
-        return response('Мы готовим призы!');
+        $prizes = Prize::all();
+        return view('prizes.list', ['prizes' => $prizes]);
     }
 
     /**
@@ -36,7 +37,7 @@ class PrizeController extends Controller
      */
     public function store(Request $request)
     {
-
+        // TODO API Admin-panel
         return response(['message' => 'Prize created successfully'], 201);
     }
 

@@ -24,6 +24,7 @@
                                     @else неограничен
                                     @endif
                                 </p>
+
                                 @if($prize->status)
                                     <p class="card-text text-center text-success">
                                         Доступно!
@@ -35,6 +36,13 @@
                                 @endif
                             </div>
                         </div>
+                    @endforeach
+                </div>
+                <div class="">
+                    <h3 class="display-6 mt-5  text-success">На эту минуту уже разыграно: </h3>
+                    @foreach($prizes as $prize)
+                        <p>{{$prize->name}} - {{ $prize->actual_amount }} {{ $prize->unit }}</p>
+
                     @endforeach
                 </div>
             </div>

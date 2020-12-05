@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\RoundController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,5 @@ Route::get('/prize', [App\Http\Controllers\PrizeController::class, 'index'])->na
 Route::get('/rounds', [RoundController::class, 'index'])->name('rounds');
 Route::post('/rounds', [RoundController::class, 'store'])->name('add-round');
 Route::get('/show', [RoundController::class, 'show'])->name('show');
+
+Route::get('/prizes', [PrizeController::class, 'index'])->name('prizes');
