@@ -53,6 +53,9 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
+                                <a class="nav-link" href="{{ route('rounds') }}">Выигрыши</a>
+                            </li>
+                            <li class="nav-item dropdown">
                                 <a class="nav-link" href="{{ route('prizes') }}">Призы</a>
                             </li>
                             <li class="nav-item dropdown">

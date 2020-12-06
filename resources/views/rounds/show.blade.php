@@ -12,6 +12,7 @@
             <tr>
                 <th scope="col">Когда</th>
                 <th scope="col">Что</th>
+                <th scope="col"></th>
                 <th scope="col">Сколько</th>
                 <th scope="col">Ед.изм</th>
             </tr>
@@ -21,11 +22,18 @@
                 <tr>
                     <th scope="row">{{$round->created_at}}</th>
                     <td>{{ $round->prize->name }}</td>
+                    @if($round->prize->id == 3)
+                        <td>{{ $round->gift->name}}   </td>
+                    @else
+                        <td></td>
+                    @endif
                     <td>{{ $round->amount }}</td>
                     <td>{{ $round->prize->unit }}</td>
                 </tr>
             @endforeach
         </table>
+        <a class="btn btn-outline-info btn-lg" href="{{ route('winner') }}" role="button">Моя статистика</a>
+        <hr class="my-4">
         <a class="btn btn-primary btn-lg my-5" href="{{ route('home') }}" role="button">Повторить участие в
             розыгрыше</a>
     </div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterPrizesTable extends Migration
+class CreateGiftsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class AlterPrizesTable extends Migration
      */
     public function up()
     {
-        Schema::table('prizes', function (Blueprint $table) {
-            $table->unsignedInteger('actual_amount');
-            $table->unsignedInteger('min_amount');
-            $table->unsignedInteger('max_amount');
+        Schema::create('gifts', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('status')->nullable()->default('free');
+            $table->string('description')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,8 +29,6 @@ class AlterPrizesTable extends Migration
      */
     public function down()
     {
-        Schema::table('prizes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('gifts');
     }
 }

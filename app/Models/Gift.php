@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Prize extends Model
+class Gift extends Model
 {
     use HasFactory;
 
@@ -16,10 +16,11 @@ class Prize extends Model
      */
     protected $fillable = [
         'name',
-        'unit',
-        'amount',
         'status',
+        'description',
+        'round_id'
     ];
+
 
     /**
      * Get the rounds of the prize.

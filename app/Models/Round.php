@@ -18,6 +18,7 @@ class Round extends Model
         'user_id',
         'prize_id',
         'amount',
+        'gift_id',
     ];
 
     /**
@@ -28,5 +29,25 @@ class Round extends Model
     public function prize()
     {
         return $this->belongsTo('App\Models\Prize');
+    }
+
+    /**
+     * Get the user that owns the round.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function winner()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    /**
+     * Get the gift that owns the round.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function gift()
+    {
+        return $this->belongsTo('App\Models\Gift');
     }
 }

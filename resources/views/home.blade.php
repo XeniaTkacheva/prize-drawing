@@ -7,6 +7,11 @@
                 <div class="jumbotron-fluid">
                     <h1 class="display-4 text-center text-info">Привет Счастливчик!</h1>
                     <p class="lead">Сегодня мы разыгрываем призы</p>
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <hr class="my-4">
                     <p>Нажми на кнопку - получишь результат: Твоя мечта осуществится!</p>
                     <form action="{{ route('add-round') }}" method="post" enctype="">
@@ -20,7 +25,7 @@
                             <div class="card-header">{{ $prize->name }}</div>
                             <div class="card-body">
                                 <p class="card-text text-center my-5">Призовой фонд -
-                                    @if($prize->name !== 'Бонусные баллы'){{ $prize->amount }} {{ $prize->unit }}
+                                    @if($prize->name !== 'Бонусные баллы'){{ $prize->actual_amount }} {{ $prize->unit }}
                                     @else неограничен
                                     @endif
                                 </p>
@@ -41,7 +46,7 @@
                 <div class="">
                     <h3 class="display-6 mt-5  text-success">На эту минуту уже разыграно: </h3>
                     @foreach($prizes as $prize)
-                        <p>{{$prize->name}} - {{ $prize->actual_amount }} {{ $prize->unit }}</p>
+                        <p>{{$prize->name}} - {{ abs($prize->amount - $prize->actual_amount)}} {{ $prize->unit }}</p>
 
                     @endforeach
                 </div>

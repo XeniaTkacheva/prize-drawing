@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Prize;
-use App\Models\Round;
 use App\Services\RoundService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class RoundController extends Controller
 {
-    protected $service;
+    protected RoundService $service;
 
     function __construct(RoundService $service)
     {
@@ -24,7 +21,9 @@ class RoundController extends Controller
      */
     public function index()
     {
-        $rounds = Round::all();
+
+        $rounds = $this->service->getAllRounds();
+
         return view('rounds.list', ['rounds' => $rounds]);
     }
 
@@ -35,9 +34,12 @@ class RoundController extends Controller
      */
     public function store()
     {
-        $this->service->addRound();
-
-        return redirect()->route('show');
+        $round = $this->service->addRound();
+        if ($round) {
+            return redirect()->route('show');
+        } else {
+            return response(['message' => 'Что-то пошло не так!'], 401)->redirectToRoute('home');
+        }
     }
 
     /**
@@ -46,43 +48,15 @@ class RoundController extends Controller
      */
     public function show()
     {
-        $new_round = Round::all()->last();
+        try {
+            $rounds = $this->service->getAllRounds();
+            $new_round = $rounds->last();
 
-        if (!empty($new_round)) {
             $prize = Prize::where('id', $new_round->prize_id)->first();
-        } else {
-            return response('Фокус не удался!');
+        } catch (\Exception $e) {
+            return response(['message' => $e->getMessage()], 422)->redirectToRoute('home');
         }
 
-        $rounds = Round::query()
-            ->where('user_id', Auth::user()->id)
-            ->with('prize')
-            ->orderBy('id', 'desc')
-            ->get();
-
         return view('rounds.show', ['round' => $new_round, 'rounds' => $rounds, 'prize' => $prize]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Round $round
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Round $round)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Round $round
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Round $round)
-    {
-        //
     }
 }

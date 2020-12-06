@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\RoundController;
+use App\Http\Controllers\WinnerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,6 @@ Route::post('/rounds', [RoundController::class, 'store'])->name('add-round');
 Route::get('/show', [RoundController::class, 'show'])->name('show');
 
 Route::get('/prizes', [PrizeController::class, 'index'])->name('prizes');
+
+Route::get('/winners', [WinnerController::class, 'index'])->name('winners');
+Route::get('/winner', [WinnerController::class, 'show'])->name('winner');
