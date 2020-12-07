@@ -38,7 +38,7 @@ class RoundController extends Controller
         if ($round) {
             return redirect()->route('show');
         } else {
-            return response(['message' => 'Что-то пошло не так!'], 401)->redirectToRoute('home');
+            return redirect('home')->with('message', 'Что-то пошло не так!');
         }
     }
 
@@ -49,14 +49,15 @@ class RoundController extends Controller
     public function show()
     {
         try {
-            $rounds = $this->service->getAllRounds();
+            $rounds = $this->service->getRoundsOfUser();
             $new_round = $rounds->last();
 
             $prize = Prize::where('id', $new_round->prize_id)->first();
-        } catch (\Exception $e) {
-            return response(['message' => $e->getMessage()], 422)->redirectToRoute('home');
-        }
+            return view('rounds.show', ['round' => $new_round, 'rounds' => $rounds, 'prize' => $prize]);
 
-        return view('rounds.show', ['round' => $new_round, 'rounds' => $rounds, 'prize' => $prize]);
+        } catch (\Exception $e) {
+
+            return redirect('home')->with('message', $e->getMessage());
+        }
     }
 }

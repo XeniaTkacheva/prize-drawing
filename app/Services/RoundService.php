@@ -23,6 +23,18 @@ class RoundService
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRoundsOfUser()
+    {
+        return Round::query()
+            ->where('user_id', Auth::id())
+            ->with(['prize', 'winner', 'gift'])
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    /**
      * @return mixed
      * @throws \Exception
      */
@@ -46,7 +58,9 @@ class RoundService
             }
 
             $gift_id = ($gifts->toArray())[$act]['id'];
-            $gift = $gifts->where('id', $gift_id)->first();
+            $gift = $gifts
+                ->where('id', $gift_id)
+                ->first();
         }
 
         $min = $prize->min_amount;
